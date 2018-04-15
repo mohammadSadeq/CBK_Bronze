@@ -412,10 +412,12 @@ public class Common extends SelTestCase {
 		int title = 2;
 		int url = 3;
 		int qty = 4;
-		int overview = 5;
-		int price = 6; 
-		int features = 7; 
-		
+		int color = 5;
+		int sizeFamily = 6; 
+		int size = 7;
+		int length = 8;
+		int info = 9;
+		int price = 10; 
 		
 
 		for (int row = 1; row < data.length; row++) {
@@ -424,13 +426,16 @@ public class Common extends SelTestCase {
 			product.put((String) data[header][title], data[row][title]);
 			product.put((String) data[header][url], data[row][url]);
 			product.put((String) data[header][qty], data[row][qty]);
-			product.put((String) data[header][overview], data[row][overview]);
+			product.put((String) data[header][color], data[row][color]);
+			product.put((String) data[header][sizeFamily], data[row][sizeFamily]);
+			product.put((String) data[header][size], data[row][size]);
+			product.put((String) data[header][length], data[row][length]);
+			product.put((String) data[header][info], data[row][info]);
 			product.put((String) data[header][price], data[row][price]);
-			product.put((String) data[header][features], data[row][features]);
 
 			products.put((String) data[row][name], product);
 		}
-		logs.debug(Arrays.asList(products)+"");
+		logs.debug("Products: "+Arrays.asList(products)+"");
 		return products;
 	}// readProducts
 

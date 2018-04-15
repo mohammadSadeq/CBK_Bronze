@@ -4,7 +4,7 @@
 	<test name="PDP Tests _ chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
-			<class name="com.generic.tests.PDP.Base_PDP" />
+			<class name="com.generic.tests.PDP_Done.Base_PDP" />
 		</classes>
 	</test><!-- Test -->
 </suite> <!-- Suite -->

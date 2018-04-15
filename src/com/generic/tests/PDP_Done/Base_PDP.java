@@ -2,7 +2,7 @@
  * this generic test for PDP regression that will pull tests from PDPRegression tab from
  * datasheet.xlsx. 
 */
-package com.generic.tests.PDP;
+package com.generic.tests.PDP_Done;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -61,7 +61,7 @@ public class Base_PDP extends SelTestCase {
 	}
 
 	@Test(dataProvider = "PDPs")
-	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String product,
+	public void PDPBaseTest(String caseId, String runTest, String desc, String proprties, String product,
 			String email, String ValidationMsg) throws Exception {
 		// Important to add this for logging/reporting
 		Testlogs.set(new SASLogger("PDP_" + getBrowserName()));
@@ -86,11 +86,54 @@ public class Base_PDP extends SelTestCase {
 				SignIn.logIn(UsedEmail, (String) userdetails.get(Registration.keys.password));
 			}
 			LinkedHashMap<String, Object> productDetails = (LinkedHashMap<String, Object>) invintory.get(product);
-			Testlogs.get().debug("productDetails" + Arrays.asList(productDetails));
+			Testlogs.get().debug("productDetails to be visted: " + Arrays.asList(productDetails));
 			Testlogs.get().debug("url key " + PDP.keys.url);
 			Testlogs.get().debug("url key value " + (String) productDetails.get(PDP.keys.url));
 			getDriver().get((String) productDetails.get(PDP.keys.url));
 
+			
+			//Apply color and check of the results reflected to PDP
+			if (!((String) productDetails.get(PDP.keys.color)).equals("") && proprties.contains("color") ){
+				logs.debug("selecting color: " + (String) productDetails.get(PDP.keys.color) );
+				PDP.selectColor((String) productDetails.get(PDP.keys.color));
+				logs.debug("checking PDP selected color");
+				String color = PDP.getcolor();
+				sassert().assertTrue(color.contains((String) productDetails.get(PDP.keys.color)), "<font color=#f442cb>product color is not expected <br>: "+color+"</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//color check
+			
+			//Apply size and it's family and check of the results reflected to PDP
+			if (!((String) productDetails.get(PDP.keys.sizeFamily)).equals("") 
+					&& proprties.contains("size") && !((String) productDetails.get(PDP.keys.size)).equals("") ){
+				logs.debug("selecting sizeFamily: " + (String) productDetails.get(PDP.keys.sizeFamily) );
+				PDP.selectFamilySize((String) productDetails.get(PDP.keys.sizeFamily));
+				
+				logs.debug("selecting size: " + (String) productDetails.get(PDP.keys.size) );
+				PDP.selectSize((String) productDetails.get(PDP.keys.size));
+								
+				logs.debug("checking PDP selected size and family size");
+				String SizeAndFamilyContent = PDP.getSelectedSizeAndFamily();
+				
+				String sizeAndFamily = (String) productDetails.get(PDP.keys.sizeFamily)+" - "+(String) productDetails.get(PDP.keys.size);
+				sassert().assertTrue(SizeAndFamilyContent.contains(sizeAndFamily), "<font color=#f442cb>product size is not expected <br>: "+SizeAndFamilyContent+"</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//size check
+			
+			
+			//Apply size and it's family and check of the results reflected to PDP
+			if (!((String) productDetails.get(PDP.keys.length)).equals("") 
+					&& proprties.contains("length") ){
+				logs.debug("selecting length: " + (String) productDetails.get(PDP.keys.length) );
+				PDP.selectLength((String) productDetails.get(PDP.keys.length));
+				
+				logs.debug("checking PDP selected length");
+				String SelectedLength = PDP.getselectedLength();
+				
+				sassert().assertTrue(SelectedLength.toLowerCase().contains(PDP.keys.length.toLowerCase()),
+						"<font color=#f442cb>product length is not expected <br>: " + SelectedLength + " from sheet:"
+								+ PDP.keys.length.toLowerCase() + "</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//size check
 			
 			if (proprties.contains("price") ){
 				logs.debug("checking PDP price");
@@ -112,13 +155,6 @@ public class Base_PDP extends SelTestCase {
 				ReportUtil.takeScreenShot(getDriver());
 			}//add to cart button check
 			
-			if (proprties.contains("stock availability") ){
-				logs.debug("checking PDP stock availability");
-				String SL = PDP.getStockAvailability();
-				Testlogs.get().debug(SL);
-				ReportUtil.takeScreenShot(getDriver());
-			}//stock availability check
-			
 			if (proprties.contains("id") ){
 				logs.debug("checking PDP ID");
 				String Id = PDP.getId();
@@ -126,21 +162,15 @@ public class Base_PDP extends SelTestCase {
 				ReportUtil.takeScreenShot(getDriver());
 			}//id check
 			
-			if (proprties.contains("overview") ){
-				logs.debug("checking PDP overview");
-				String overView = PDP.getOverView();
-				sassert().assertTrue(overView.trim().contains(((String) productDetails.get(PDP.keys.overview)).trim()),
-						"<font color=#f442cb>product OverView is not expected found: " + overView + " <br>expected: "
-								+ (String) productDetails.get(PDP.keys.overview) + "</font>");
+			if (proprties.contains("info") ){
+				logs.debug("checking PDP info");
+				String information = PDP.getProductInfo();
+				sassert().assertTrue(information.trim().contains(((String) productDetails.get(PDP.keys.info)).trim()),
+						"<font color=#f442cb>product info is not expected found: " + information + " <br>expected: "
+								+ (String) productDetails.get(PDP.keys.info) + "</font>");
 				ReportUtil.takeScreenShot(getDriver());
-			}//summary check
+			}//info check
 			
-			if (proprties.contains("feature") ){
-				logs.debug("checking PDP feature");
-				String Pdesc = PDP.getFeatures();
-				sassert().assertTrue(Pdesc.contains((String) productDetails.get(PDP.keys.features)), "<font color=#f442cb>product features is not expected <br>: "+Pdesc+"</font>");
-				ReportUtil.takeScreenShot(getDriver());
-			}//desc check
 			
 			sassert().assertAll();
 			Common.testPass();

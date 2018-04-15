@@ -28,13 +28,16 @@ public class PDP extends SelTestCase {
 		public static final String title = "title";
 		public static final String url = "url";
 		public static final String qty = "qty";
-		public static final String overview = "overview";
+		public static final String color = "color";
+		public static final String sizeFamily = "sizeFamily";
+		public static final String size = "size";
+		public static final String info = "info";
 		public static final String price = "price";
-		public static final String features = "features";
+		public static final String length = "length";
 
 	}
 
-	// Done
+	
 	public static void addProductsToCartAndClickCheckOut(String url, String qty) throws Exception {
 		getCurrentFunctionName(true);
 		addProductsToCart(url, qty);
@@ -42,7 +45,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// Done
+	
 	public static void addProductsToCart(String url, String qty) throws Exception {
 		getCurrentFunctionName(true);
 		getDriver().get(url);
@@ -52,19 +55,25 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// Done
+	//done-CBK
 	public static String getPrice() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.price);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.price);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
 	}
 
-	// done
+	
 	private static void clickcheckoutBtnCartPopup() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -75,7 +84,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// done
+	
 	private static void clickAddToCartBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -86,7 +95,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// done
+	
 	private static void defineQty(String qty) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -97,94 +106,207 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// done
+	//Done-CBK
 	public static String getId() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.id);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.id);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
 	}
 
-	// done
+	//Done-CBK
 	public static String getTitle() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.title);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.title);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
 	}
 
-	// done
-	public static String getOverView() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.information);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-		Pattern p = Pattern.compile("OVERVIEW(.*)FEATURES");
-		Matcher m = p.matcher(SelectorUtil.textValue.get().replace("\n", "").replace("\r", "")); // get a matcher object
-		String OverView = "";
-		if (m.find())
-			OverView = m.group(1);
-		logs.debug("Over View: " + OverView);
-
-		return OverView;
+	//Done-CBK
+	public static String getProductInfo() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.information);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			String information = SelectorUtil.textValue.get();
+			logs.debug("product info: " +information );
+			getCurrentFunctionName(false);
+			return information;
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
 	}
 
-	// done
-	public static String getFeatures() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.information);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-
-		Pattern p = Pattern.compile("FEATURES(.*)SKU NUMBER");
-		Matcher m = p.matcher(SelectorUtil.textValue.get().replace("\n", "").replace("\r", "")); // get a matcher object
-		String Features = "";
-		if (m.find())
-			Features = m.group(1);
-		logs.debug("Features: " + Features);
-
-		return Features;
-	}
-
-	// done
-	public static String getStockAvailability() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.SA);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
-		return SelectorUtil.textValue.get();
-	}
-
-	// done
+	//done-CBK
 	public static boolean checkAddToCartButton() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.addToCartBtn);
-		boolean isDisplayed = SelectorUtil.isDisplayed(subStrArr);
-		logs.debug("existence check result is " + isDisplayed);
-		getCurrentFunctionName(false);
-		return isDisplayed;
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.addToCartBtn);
+			boolean isDisplayed = SelectorUtil.isDisplayed(subStrArr);
+			logs.debug("existence check result is " + isDisplayed);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+	}
+	
+	//Done-CBK
+	public static String getcolor() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.colorLable);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+	}
+	
+	//Done-CBK
+	public static void selectFamilySize(String FamilySize) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(FamilySize);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+		
+	}
+	
+	//Done-CBK
+	public static void selectSize(String size) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add("Select size: "+size);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+		
 	}
 
-	//done
+	//Done-CBK
+	public static String getSelectedSizeAndFamily() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.sizeAndFamilyLable);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+	}
+	
+	
+	// Done-CBK
+	public static void selectLength(String length) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(length);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+	}
+	
+	//Done-CBK
+	public static String getselectedLength() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.lengthLable);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+			return SelectorUtil.textValue.get();
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+	}
+	
+	//Done-CBK
+	public static void selectColor(String color) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.color + color);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			Thread.sleep(3000);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
+			}.getClass().getEnclosingMethod().getName() + "</p>");
+			throw e;
+		}
+		
+	}
+
+	
 	public static void hoverMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(SelTestCase.getDriver()).withTimeout(30, TimeUnit.SECONDS)
@@ -206,7 +328,7 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	// done
+	
 	public static String getProductQtyInMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -218,7 +340,7 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	// done
+	
 	public static String getProductUnitPriceInMiniCart() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -229,4 +351,10 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 		return SelectorUtil.textValue.get();
 	}
+
+
+
+
+
+
 }
