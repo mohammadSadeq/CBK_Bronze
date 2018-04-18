@@ -1,6 +1,8 @@
 package com.generic.page;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +19,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.selector.PDPSelectors;
+import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
@@ -37,22 +40,33 @@ public class PDP extends SelTestCase {
 
 	}
 
-	
-	public static void addProductsToCartAndClickCheckOut(String url, String qty) throws Exception {
-		getCurrentFunctionName(true);
-		addProductsToCart(url, qty);
-		clickcheckoutBtnCartPopup();
-		getCurrentFunctionName(false);
+	//done- CBK
+	public static void addProductsToCartAndClickCheckOut(LinkedHashMap<String, String> productDetails) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			addProductsToCart(productDetails);
+			clickcheckoutBtnCartPopup();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
-	
-	public static void addProductsToCart(String url, String qty) throws Exception {
-		getCurrentFunctionName(true);
-		getDriver().get(url);
-		defineQty(qty);
-		clickAddToCartBtn();
-		Thread.sleep(1000);
-		getCurrentFunctionName(false);
+	//done- CBK
+	public static void addProductsToCart(LinkedHashMap<String, String> productDetails) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			getDriver().get(productDetails.get(keys.url));
+			clickAddToCartBtn();
+			Thread.sleep(1000);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	//done-CBK
@@ -67,8 +81,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -84,18 +98,24 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	
+	//done-CBK
 	private static void clickAddToCartBtn() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.addToCartBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.addToCartBtn);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
-	
+	//OOS-cbk
 	private static void defineQty(String qty) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -118,8 +138,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -136,8 +156,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -156,8 +176,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return information;
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -173,8 +193,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return isDisplayed;
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -191,8 +211,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -208,8 +228,8 @@ public class PDP extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 		
@@ -226,8 +246,8 @@ public class PDP extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 		
@@ -245,8 +265,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -263,8 +283,8 @@ public class PDP extends SelTestCase {
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -281,8 +301,8 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(false);
 			return SelectorUtil.textValue.get();
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
@@ -299,8 +319,8 @@ public class PDP extends SelTestCase {
 			Thread.sleep(3000);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			logs.debug("<p style='font-weight: bold; color:red'>Page function failed:" + new Object() {
-			}.getClass().getEnclosingMethod().getName() + "</p>");
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 		

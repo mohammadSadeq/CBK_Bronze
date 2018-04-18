@@ -3,6 +3,7 @@ package com.generic.page;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebElement;
 
@@ -20,7 +21,7 @@ public class Cart extends SelTestCase {
 
 	}
 
-	//Done
+	
 	public static void clickCheckout() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -32,19 +33,25 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//Done
+	//done-cbk
 	public static void clickContinueShoping() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "continue shopping"));
-		subStrArr.add(CartSelectors.continueShopping);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "continue shopping"));
+			subStrArr.add(CartSelectors.continueShopping);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
-	//done
+	
 	public static int getNumberOfproducts() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -84,35 +91,47 @@ public class Cart extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 	
-	//done
+	//done-cbk
 	public static String getProductUnitPrice() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.unitPrice);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug ( "unit price is: "+SelectorUtil.textValue.get());
-		String totals = SelectorUtil.textValue.get();
-		getCurrentFunctionName(false);
-		return totals;
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.unitPrice);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug("product unit price is: " + SelectorUtil.textValue.get());
+			String totals = SelectorUtil.textValue.get();
+			getCurrentFunctionName(false);
+			return totals;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 	
-	//done
+	//done-cbk
 	public static String getProductSubtotal() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(CartSelectors.productSubtotal);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		logs.debug ( "product subtotal is: "+SelectorUtil.textValue.get());
-		String totals = SelectorUtil.textValue.get();
-		getCurrentFunctionName(false);
-		return totals;
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.productSubtotal);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug("product subtotal is: " + SelectorUtil.textValue.get());
+			String totals = SelectorUtil.textValue.get();
+			getCurrentFunctionName(false);
+			return totals;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 	
-	//done
+	
 	public static String getTotals() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -126,24 +145,49 @@ public class Cart extends SelTestCase {
 		return totals;
 	}
 
-	//done
+	
+	//done-cbk
 	public static String getOrderTotal() throws Exception {
-		getCurrentFunctionName(true);
-		String totals = getTotals();
-		getCurrentFunctionName(false);
-		return totals.split("\n")[9].trim();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.orderTotal);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug("product subtotal is: " + SelectorUtil.textValue.get());
+			String totals = SelectorUtil.textValue.get();
+			getCurrentFunctionName(false);
+			return totals;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
-	//done
+	//done-cbk
 	public static String getOrderSubTotal() throws Exception {
-		getCurrentFunctionName(true);
-		String totals = getTotals();
-		getCurrentFunctionName(false);
-		return totals.split("\n")[1].trim();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.orderSubtotal);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug("order subtotal is: " + SelectorUtil.textValue.get());
+			String totals = SelectorUtil.textValue.get();
+			getCurrentFunctionName(false);
+			return totals;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 
 	}
 	
-	//done
+	
 	public static String getPromotionalDiscount() throws Exception {
 		getCurrentFunctionName(true);
 		String totals = getTotals();
@@ -152,16 +196,28 @@ public class Cart extends SelTestCase {
 
 	}
 	
-	//done
+	//done-cbk
 	public static String getOrderDiscount() throws Exception {
-		getCurrentFunctionName(true);
-		String totals = getTotals();
-		getCurrentFunctionName(false);
-		return totals.split("\n")[3].trim();
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(CartSelectors.orderDiscount);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			logs.debug("order discount is: " + SelectorUtil.textValue.get());
+			String totals = SelectorUtil.textValue.get();
+			getCurrentFunctionName(false);
+			return totals;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 
 	}
 	
-	//done
+	
 		public static String getOrderClubDicount() throws Exception {
 			getCurrentFunctionName(true);
 			String totals = getTotals();
@@ -170,7 +226,7 @@ public class Cart extends SelTestCase {
 
 		}
 	
-	//done
+	
 	public static void applyPromotion(String promotion) throws Exception {
 		getCurrentFunctionName(true);
 		if (!"".equals(promotion)) {
@@ -194,7 +250,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//done
+	
 	private static void clickApplycoupon() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -205,7 +261,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
-	//Done
+	
 	private static void writeCoupon(String coupon) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -216,7 +272,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//Done
+	
 	public static String validateCoupon() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -241,7 +297,7 @@ public class Cart extends SelTestCase {
 		logs.debug(MessageFormat.format(LoggingMsg.COUPON_MSG, SelectorUtil.textValue.get()));
 		return SelectorUtil.textValue.get();
 	}
-	//done 
+	 
 	public static void updateQuantityValue(String browser, String lineOrder, String qty) throws Exception {
 		// Limited to edit first product qty
 		getCurrentFunctionName(true);
@@ -250,7 +306,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
-	//done
+	
 	private static void clickUpdateBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -261,7 +317,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//done
+	
 	private static void writeNewQunatity(String browser, String lineOrder, String qty) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -272,7 +328,7 @@ public class Cart extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	//done
+	
 	public static String getErrorMsg() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -293,7 +349,7 @@ public class Cart extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
-	//done
+	
 	public static String getCartMsg() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -332,7 +388,7 @@ public class Cart extends SelTestCase {
 		return (SelectorUtil.textValue.get().contains("empty") ? true : false);
 	}
 
-	//done
+	
 	public static void removeAllItemsFromCart() throws Exception {
 		getCurrentFunctionName(true);
 
