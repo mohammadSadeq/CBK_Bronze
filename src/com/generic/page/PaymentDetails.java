@@ -3,10 +3,12 @@ package com.generic.page;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut.shippingAddress;
 import com.generic.selector.PaymentDetailsSelectors;
 import com.generic.setup.SelTestCase;
+import com.generic.setup.ExceptionMsg;
 import com.generic.setup.LoggingMsg;
 import com.generic.util.SelectorUtil;
 
@@ -29,16 +31,18 @@ public class PaymentDetails extends SelTestCase {
 	
 			}
 			
-			//done
+			
 			public static void fill(String cardtype, String cardNumber, String expireDay, String expireYear,
 					String CVC) throws Exception {
 				getCurrentFunctionName(true);
 				if (!"".equals(cardtype))
 					selectCardType(cardtype);
+				if (!"".equals(cardtype))
+					writeCardHolder("Tester");
 				if (!"".equals(cardNumber))
 					typeCardNumber(cardNumber);
 				if (!"".equals(expireDay))
-					selectExpireDay(expireDay);
+					selectExpireMonth(expireDay);
 				if (!"".equals(expireDay))
 					typeExpireYear(expireYear);
 				if (!"".equals(CVC))
@@ -46,7 +50,27 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 			
-	
+			
+		// done-cbk
+		private static void writeCardHolder(String holder) throws Exception {
+			try {
+				getCurrentFunctionName(true);
+				List<String> subStrArr = new ArrayList<String>();
+				List<String> valuesArr = new ArrayList<String>();
+				subStrArr.add(PaymentDetailsSelectors.CardHolder);
+				valuesArr.add(holder);
+				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				getCurrentFunctionName(false);
+
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
+
+		}
+
+
 			//TODO: if bw allow
 			public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay,
 					String expireYear, String CVC, boolean savePayment, boolean billSameShip, String countery,
@@ -70,7 +94,7 @@ public class PaymentDetails extends SelTestCase {
 			}
 	
 			
-			//done
+			
 			public static void fillAndclickNext(String cardtype, String cardNumber, String expireDay, String expireYear,
 					String CVC, boolean billSameShip, String countery, String firstName, String lastName, String address,
 					String city, String postal, String phone) throws Exception {
@@ -91,7 +115,7 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			//done
+			
 			private static void clickAddPaymentMethod() throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -136,7 +160,7 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			//done
+			
 			private static void pickFirstpaymentsaved() throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -148,7 +172,7 @@ public class PaymentDetails extends SelTestCase {
 	
 			}
 	
-			//done
+			
 			public static void clickNext() throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -159,7 +183,7 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			//done
+			
 			private static void savePaymentMethod(boolean savePayment) throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -170,7 +194,7 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			//done
+			
 			public static void typeCVC(String CVC) throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -181,7 +205,7 @@ public class PaymentDetails extends SelTestCase {
 				getCurrentFunctionName(false);
 			}
 	
-			//done
+			
 			public static void typeExpireYear(String expireYear) throws Exception {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
@@ -193,41 +217,59 @@ public class PaymentDetails extends SelTestCase {
 	
 			}
 	
-			//done
-			public static void selectExpireDay(String expireDay) throws Exception {
+		// done-cbk
+		public static void selectExpireMonth(String expireDay) throws Exception {
+			try {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
 				List<String> valuesArr = new ArrayList<String>();
-				subStrArr.add(PaymentDetailsSelectors.expireDay);
+				subStrArr.add(PaymentDetailsSelectors.expireMonth);
 				valuesArr.add(expireDay);
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 				getCurrentFunctionName(false);
-	
+				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
 			}
+
+		}
 	
-			//done
+			//done-cbk
 			public static void typeCardNumber(String cardNumber) throws Exception {
+			try {
 				getCurrentFunctionName(true);
 				List<String> subStrArr = new ArrayList<String>();
 				List<String> valuesArr = new ArrayList<String>();
 				subStrArr.add(PaymentDetailsSelectors.cardNumber);
 				valuesArr.add(cardNumber);
-				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				SelectorUtil.getNthElement(subStrArr, 1).sendKeys(cardNumber);;
 				getCurrentFunctionName(false);
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
 	
 			}
 	
-			//done
+			//done-cbk
 			public static void selectCardType(String cardtype) throws Exception {
+			try {
 				getCurrentFunctionName(true);
-				Thread.sleep(1000);
 				List<String> subStrArr = new ArrayList<String>();
 				List<String> valuesArr = new ArrayList<String>();
-				subStrArr.add(PaymentDetailsSelectors.cardtype+cardtype);
-				valuesArr.add("");
+				subStrArr.add(PaymentDetailsSelectors.cardtype);
+				valuesArr.add(cardtype);
 				SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+				Thread.sleep(1000);
 				getCurrentFunctionName(false);
-	
+			} catch (NoSuchElementException e) {
+				logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+				}.getClass().getEnclosingMethod().getName()));
+				throw e;
+			}
 			}
 	
 		}// payment info
@@ -267,19 +309,25 @@ public class PaymentDetails extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
-	//done
+	//done-cbk
 	public static void clickSavePayment() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PaymentDetailsSelectors.savePaymentBtn);
-		valuesArr.add("");
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_DELETE_BUTTON, "confirm delete address"));
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PaymentDetailsSelectors.savePaymentBtn);
+			valuesArr.add("");
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_DELETE_BUTTON, "confirm delete address"));
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 	
-	//done
+	
 	public static void fillandClickSave(String cardtype, String cardNumber, String expireDay, String expireYear,
 			String CVC) throws Exception {
 		getCurrentFunctionName(true);
@@ -288,7 +336,7 @@ public class PaymentDetails extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 	
-	//done
+	
 	public static void clickOnAddBtn() throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();

@@ -9,19 +9,15 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlTest;
 import java.util.LinkedHashMap;
-import com.generic.page.PDP;
 import com.generic.page.PaymentDetails;
 import com.generic.page.Registration;
-import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
-import com.generic.selector.PaymentDetailsSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
@@ -94,7 +90,7 @@ public class PaymentDetailsValidationBase extends SelTestCase {
 
 			// checkout- payment
 			LinkedHashMap<String, Object> paymentDetails = (LinkedHashMap<String, Object>) paymentCards.get(payment);
-			LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses.get(billingAddress);
+			//LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses.get(billingAddress);
 
 			logs.debug(Arrays.asList(paymentDetails)+"");
 			
@@ -103,8 +99,7 @@ public class PaymentDetailsValidationBase extends SelTestCase {
 			PaymentDetails.fillandClickSave(payment,
 					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
 					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
-					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
-					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC));
+					(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),"");
 			
 			if (desc.contains("delete")) {
 				//TODO:tweak
