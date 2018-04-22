@@ -96,7 +96,7 @@ public class LoggingMsg {
 	public static String CLICKING_SETASDEFAULT_BUTTON = "clicking on {0} btn from address book";
 	public static String CLICKING_REMOVE_BUTTON = "clicking on {0} btn from address book";
 	public static String CLICKING_Edit_BUTTON = "clicking on {0} btn from address book";
-	public static String ADDRESS_DETAIL = "Address Detail: {0}";
+	public static String ADDRESS_DETAIL = "Address Details: {0}";
 	public static String OLD_ADDRESS_DETAIL = "Old Address: {0}";
 	public static String CLICKING_ADD_ADDRESS_BUTTON = "clicking on {0} btn from address book";
 	public static String CLICKING_SAVE_ADDRESS_BUTTON = "clicking on {0} btn from add address";

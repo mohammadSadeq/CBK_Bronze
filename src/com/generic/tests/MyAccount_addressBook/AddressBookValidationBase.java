@@ -1,9 +1,8 @@
 package com.generic.tests.MyAccount_addressBook;
 
-import static org.testng.Assert.assertNotEquals;
-
 import java.text.MessageFormat;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -16,17 +15,14 @@ import com.generic.page.Registration;
 import com.generic.page.AddressBook;
 import com.generic.page.CheckOut;
 import com.generic.page.SignIn;
-import com.generic.selector.AddressBookSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.util.TestUtilities;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.ReportUtil;
 import com.generic.util.SASLogger;
-import com.generic.util.SelectorUtil;
 
 public class AddressBookValidationBase extends SelTestCase {
 	private static LinkedHashMap<String, Object> addresses = null;
@@ -87,43 +83,44 @@ public class AddressBookValidationBase extends SelTestCase {
 			
 			SignIn.logIn(caseMail, (String) userdetails.get(Registration.keys.password));
 			
+			getDriver().get(url);
+			
 			if (prop.contains("new") || prop.contains("default") || prop.contains("delete")) {
-				getDriver().get(url);
 				Thread.sleep(1000);
 				AddressBook.clickAddNewAddress();
-				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses
+				LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses
 						.get(newaddress);
 				AddressBook.fillAndClickSave(caseMail,
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						"NEW_" + RandomUtils.nextInt(1000, 9000),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), defaultAddress);
+						addressDetails.get(CheckOut.shippingAddress.keys.countery),
+						RandomStringUtils.randomAlphabetic(5),
+						addressDetails.get(CheckOut.shippingAddress.keys.lastName),
+						addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+						addressDetails.get(CheckOut.shippingAddress.keys.city),
+						addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
+						addressDetails.get(CheckOut.shippingAddress.keys.phone));
 				if (prop.contains("new")) {
 					String siteAddress = AddressBook.getFirstAddressDetails();
 					Testlogs.get().debug(siteAddress);
-					sassert().assertTrue(siteAddress.contains((String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine)),
-							"Address doesnt contain line1: " + siteAddress);
+					sassert().assertTrue(siteAddress.toLowerCase().contains((String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine).toLowerCase()),
+							"Address "+ siteAddress+" doesnt contain line1: " + (String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine));
 				}
 				
 			}
 			
 			if (prop.contains("edit")) {
-				getDriver().get(url);
 				String addressbook = AddressBook.getFirstAddressDetails();
 				AddressBook.clickEditAddress();
 				LinkedHashMap<String, Object> addressDetails = (LinkedHashMap<String, Object>) addresses.get(newaddress);
 				AddressBook.fillAndClickUpdate(caseMail,
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.countery),
-						"NEW_" + RandomUtils.nextInt(1000, 9000),
+						RandomStringUtils.randomAlphabetic(5),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.lastName),
-						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
+						(String) addressDetails.get(CheckOut.shippingAddress.keys.adddressLine)+"nue",
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.city),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
 						(String) addressDetails.get(CheckOut.shippingAddress.keys.phone), false);
-				sassert().assertNotEquals(addressbook, AddressBook.getFirstAddressDetails());
+				String newAddress = AddressBook.getFirstAddressDetails();
+				sassert().assertNotEquals(addressbook,newAddress , "Address is not updated correctely : new " + newAddress +" <br> old one: "+addressbook);
 			}
 			
 			//Remove the created address.
