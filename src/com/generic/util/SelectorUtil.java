@@ -614,26 +614,27 @@ public class SelectorUtil extends SelTestCase {
 //						   for(int i=1; i<options.size(); i++) {
 //						   	    logs.debug(options.get(i).getText());
 //							}
-						   String textVal= "";
-						   try {
-							   if (!value.isEmpty()) {
-								   List<WebElement> options = select.getOptions();
-								   for(int i=0; i<options.size(); i++)
-								   {
-									   // logs.debug(options.get(i).getText().trim());
-									   if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase()) && !value.equals(""))
-									   {
-										   logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i )); 
-										   select.selectByIndex(i);
-										   break;
-									   }
-								   }
-							   }
-							   else
-							   {
-								   textVal = select.getFirstSelectedOption().getText();
-							   }
-						   }
+						String textVal = "";
+						try {
+							if (!value.isEmpty() && !value.contains("FFF")) {
+								List<WebElement> options = select.getOptions();
+								for (int i = 0; i < options.size(); i++) {
+									// logs.debug(options.get(i).getText().trim());
+									if (options.get(i).getText().toLowerCase().trim().contains(value.toLowerCase())
+											&& !value.equals("")) {
+										logs.debug(MessageFormat.format(LoggingMsg.SELECTED_INDEX, i));
+										select.selectByIndex(i);
+										break;
+									}
+								}
+							} else if (value.contains("FFF")) {
+								String index = value.split("FFF")[1];
+								logs.debug("Direct selection "+MessageFormat.format(LoggingMsg.SELECTED_INDEX, index));
+								select.selectByIndex(Integer.parseInt(index));
+							} else {
+								textVal = select.getFirstSelectedOption().getText();
+							}
+						}
 						   catch(Exception e)
 						   {
 							   logs.debug(LoggingMsg.TRY_ALT_WAY_MSG);

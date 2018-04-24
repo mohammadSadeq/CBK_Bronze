@@ -90,11 +90,8 @@ public class PDP extends SelTestCase {
 	
 	private static void clickcheckoutBtnCartPopup() throws Exception {
 		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		subStrArr.add(PDPSelectors.cart_popup);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+		//TODO: pull from config
+		getDriver().get("https://dev.christopherandbanks.com/cart");
 		getCurrentFunctionName(false);
 	}
 

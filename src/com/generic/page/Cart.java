@@ -21,16 +21,22 @@ public class Cart extends SelTestCase {
 
 	}
 
-	
+	// done-cbk
 	public static void clickCheckout() throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		List<String> valuesArr = new ArrayList<String>();
-		logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "checkout"));
-		subStrArr.add(CartSelectors.checkoutBtn);
-		valuesArr.add("");
-		SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
-		getCurrentFunctionName(false);
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			logs.debug(MessageFormat.format(LoggingMsg.CLICKING_CART_BUTTON, "checkout"));
+			subStrArr.add(CartSelectors.checkoutBtn);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 
 	//done-cbk
@@ -176,7 +182,7 @@ public class Cart extends SelTestCase {
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
 			logs.debug("order subtotal is: " + SelectorUtil.textValue.get());
-			String totals = SelectorUtil.textValue.get();
+			String totals = SelectorUtil.textValue.get().split(":")[1].trim();
 			getCurrentFunctionName(false);
 			return totals;
 		} catch (NoSuchElementException e) {

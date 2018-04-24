@@ -10,14 +10,9 @@ public class CartSelectors
 	public static final String orderSubtotal = "order-subtotal";
 	public static final String orderDiscount = "order-discount discount";
 	public static final String orderTotal = "order-value value";
+	public static final String checkoutBtn = "dwfrm_cart_checkoutCart";
 	
 	
-	
-	
-	
-	
-	
-	public static final String checkoutBtn = "secure-checkout-btn";
 	public static final String totals = "totals-line-items";
 	public static final String couponField = "voucherCode";
 	public static final String applyCouponButton = "css,.voucher-code-btn";

@@ -14,20 +14,21 @@ public class CheckOutSelectors
 	
 	//Shipping Address
 	//done
+	public static final String addresses = "dwfrm_singleshipping_addressList";
+	public static final String addAddressChekbx = "Add New Address";
+	public static final String firstName = "dwfrm_singleshipping_shippingAddress_addressFields_firstName";
+	public static final String lastName = "dwfrm_singleshipping_shippingAddress_addressFields_lastName";
+	public static final String  address= "dwfrm_singleshipping_shippingAddress_addressFields_address1";
+	public static final String city = "dwfrm_singleshipping_shippingAddress_addressFields_city";
+	public static final String state = "dwfrm_singleshipping_shippingAddress_addressFields_states_state";
+	public static final String zipcode = "dwfrm_singleshipping_shippingAddress_addressFields_postal";
+	public static final String countery = "dwfrm_singleshipping_shippingAddress_addressFields_country";
+	public static final String phone = "dwfrm_singleshipping_shippingAddress_addressFields_phone";
+	
 	public static final String emailAddress = "email required textfield textmargin form-control";
-	public static final String state = "stateIso";
-	public static final String firstName = "address.firstName";
-	public static final String lastName = "address.surname";
-	public static final String  address= "address.line1";
-	public static final String city = "address.townCity";
-	public static final String zipcode = "address.postcode";
-	public static final String countery = "select-country";
-	public static final String phone = "address.phoneNo";
 	public static final String addressBookBtn = "css,section>div>div>div>div>div>div>button";
-	public static final String selectFirstAddress = "delevery_address_button right pad_left use_address";
 	public static final String submitShippingAddressBtn = "btngreen1 btn-primary-green";
 	public static final String CheckSaveAddress = "SaveAddress";
-	
 	public static final String title = "address.title";
 	public static final String orderTotalShippingAddress = "test_cart_totalPrice_label_$";
 	public static final String orderSubTotalShippingAddress = "test_Order_Totals_Subtotal_$";
@@ -42,27 +43,29 @@ public class CheckOutSelectors
 	
 	//shipping method
 	//done
-	public static final String submitShippingMethodbtn = "use_this_delivery_method";
-	public static final String addshippingMethodBtn = "change_mode_button";
+	public static final String shippingMethod = "shipping-method-1POS_";
+	public static final String continueToPaymentMethodBtn = "dwfrm_singleshipping_shippingAddress_save";
+	public static final String ShippingMail = "dwfrm_singleshipping_shippingAddress_addressFields_friendshipRewards_email";
 	
-	public static final String shippingMethod = "delivery_method";
+	public static final String addshippingMethodBtn = "change_mode_button";
+	public static final String submitShippingMethodbtn = "use_this_delivery_method";
 	public static final String orderTotalShippingMethod = "test_cart_totalPrice_label_$";
 	public static final String orderSubTotalShippingMethod = "test_Order_Totals_Subtotal_$";
 	
 	//Payment info
 	//done 
-	public static final String cardtype = "css,form>div>div>div>div>div>label>input#radioId";
-	public static final String cardNumber = "cardNumber";
-	public static final String expireDay = "ExpiryMonth";
-	public static final String expireYear = "ExpiryYear";
-	public static final String CVC = "cvvNo";
+	public static final String selectFirstPayment = "creditCardList";
+	public static final String CVC = "new_dwfrm_billing_paymentMethods_creditCard_cvn";
+	public static final String orderReviewBtn = "Continue to review Order";
+	public static final String cardtype = "dwfrm_billing_paymentMethods_creditCard_type";
+	public static final String cardHolder = "new_dwfrm_billing_paymentMethods_creditCard_owner";
+	public static final String cardNumber = "new_dwfrm_billing_paymentMethods_creditCard_number";
+	public static final String expireDay = "new_dwfrm_billing_paymentMethods_creditCard_expiration_month";
+	public static final String expireYear = "new_dwfrm_billing_paymentMethods_creditCard_expiration_year";
+	
 	public static final String submitPayment = "lastButtonInTheForm";
 	public static final String checkSavePayment = "SaveDetails";
 	public static final String addPaymentBtn = "css,section>div>div>div>div>div>a.linkarrow";
-	public static final String selectFirstPayment = "saved_card_button btn-primary-green";
-	
-	//TODO: delete
-	public static final String cardHolder = "card_nameOnCard";
 	public static final String checkSame = "differentAddress";
 	public static final String savedPaymentBtn = "btn btn-default btn-block js-saved-payments";
 	public static final String orderTotalPymentInfo = "test_cart_totalPrice_label_$";
@@ -76,18 +79,20 @@ public class CheckOutSelectors
 	public static final String billToCountryError = "billTo_country.errors";
 		
 	//summary - review / place order
-	//done
-	public static final String placeOrderBtn = "placeorderid1";
+	//done-cbk
+	public static final String summaryTotal = "order-subtotal";
+	public static final String placeOrderBtn = "submit";
 	
-	public static final String summaryTotal = "test_Order_Totals_Subtotal_$";
 	public static final String shippingCost = "test_Order_Totals_Delivery_$";
 	public static final String acceptTerm = "Terms1";
 	public static final String orderTotalOrderSumary = "test_cart_totalPrice_label_$";
 	
 	//Order confirmation
-	public static final String orderId = "test_orderDetail_overviewOrderID_label_$1";
+	//done-cbk
+	public static final String orderConfirmationSubtotal = "order-subtotal";
+	public static final String orderId = "order-number";
+	
 	public static final String orderConfirmationTotal = "test_orderTotal_totalPrice_label_$";
-	public static final String orderConfirmationSubtotal = "test_orderTotal_subTotal_label_$1";
 	public static final String orderConfirmationShippingCost = "test_orderTotal_devlieryCost_label_$";
 	public static final String orderconfirmationBillingAddress = "col-sm-6 col-md-4 order-billing-address";
 	public static final String orderconfirmationshippingAddress = "order-ship-to";
@@ -99,10 +104,12 @@ public class CheckOutSelectors
 	
 	//Guest order
 	//done
-	public static final String returningcustomerUsername = "j_username";
-	public static final String returningcustomerPassword = "j_password";
-	public static final String returningcustomerloginBtn = "btn-primary-green";
-	public static final String guestCheckoutButton = "Checkout as a Guest";
+	public static final String ShippingMethodType = "is-test";
+	public static final String guestCheckoutButton = "dwfrm_login_unregistered";
+	public static final String choseToLogin = "Login For Faster Checkout";
+	public static final String returningcustomerUsername = "dwfrm_login_username";
+	public static final String returningcustomerPassword = "dwfrm_login_password";
+	public static final String returningcustomerloginBtn = "spc-login-btn";
 	
 	public static final String guestMail = "guest.email";
 	public static final String guestConfirmationMail = "confirmGuestEmail form-control";

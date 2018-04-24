@@ -69,8 +69,8 @@ public class Base_checkout extends SelTestCase {
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
 	@Test(dataProvider = "Orders")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String products,
-			String shippingMethod, String payment, String shippingAddress, String billingAddress, String coupon,
-			String email) throws Exception {
+			String shippingType, String shippingMethod, String payment, String shippingAddress, String billingAddress,
+			String coupon, String email) throws Exception {
 		//Important to add this for logging/reporting 
 		Testlogs.set(new SASLogger("checkout_"+getBrowserName()));
 		setTestCaseReportName("Checkout Case");
@@ -110,6 +110,7 @@ public class Base_checkout extends SelTestCase {
 				LinkedHashMap<String, Object> RandomUserdetails = (LinkedHashMap<String, Object>) users.entrySet().iterator()
 						.next().getValue();
 
+				Registration.goToRegistrationForm();
 				Registration.fillAndClickRegister((String) RandomUserdetails.get(Registration.keys.firstName),
 						(String) RandomUserdetails.get(Registration.keys.lastName),
 						Pemail, (String) RandomUserdetails.get(Registration.keys.password),
@@ -129,12 +130,13 @@ public class Base_checkout extends SelTestCase {
 					Cart.validateCoupon();
 				}
 			}
-			orderSubtotal = "";//Cart.getOrderSubTotal();
-			//Cart.clickCheckout();
+			orderSubtotal = Cart.getOrderSubTotal();
+			Cart.clickCheckout();
 			
 			if (proprties.contains(loggedDuringChcOt)) {
 				Testlogs.get().debug("Login during checkout with: "+Pemail);
 				Testlogs.get().debug("Using password: "+(String) userdetails.get(Registration.keys.password) );
+				CheckOut.guestCheckout.clickOnLoginForFasterCheckout();
 				CheckOut.guestCheckout.returningCustomerLogin(Pemail, (String) userdetails.get(Registration.keys.password));
 			}
 			if (proprties.contains(guestUser)) {
@@ -143,19 +145,24 @@ public class Base_checkout extends SelTestCase {
 			}
 
 			Thread.sleep(1000);
-			// Validate the order sub total in shipping address form section
-			//sassert().assertEquals(CheckOut.shippingAddress.getOrdersubTotal(), orderSubtotal);
 
+			//checkout Shipping method Type
+			CheckOut.shippingMethod.shippingMethodType(shippingType);
+			ReportUtil.takeScreenShot(getDriver());
+			
 			// checkout- shipping address
 			if ((proprties.contains(CheckOut.shippingAddress.keys.isSavedShipping) && !proprties.contains(freshUser)
-					&& !proprties.contains(guestUser) ) || proprties.contains(loggedInUser) || proprties.contains(loggedDuringChcOt) ){
-				CheckOut.shippingAddress.fillAndClickNext(true);
+					&& !proprties.contains(guestUser) ) || proprties.contains(loggedInUser) || proprties.contains(loggedDuringChcOt)
+					&& !proprties.contains(freshUser) ){
+				CheckOut.shippingAddress.fillAndClickNext(true);//pick first saved option 
 				Thread.sleep(1000);
 			} else {
-
+				
+				if (!proprties.contains(guestUser)) 
+					CheckOut.shippingAddress.addAddress(); //this button is not exist in guest checkout
+				
 				// in case guest the save shipping check-box is not exist
 				CheckOut.shippingAddress.fillAndClickNext(
-						Pemail,
 						addressDetails.get(CheckOut.shippingAddress.keys.countery),
 						addressDetails.get(CheckOut.shippingAddress.keys.firstName),
 						addressDetails.get(CheckOut.shippingAddress.keys.lastName),
@@ -163,16 +170,26 @@ public class Base_checkout extends SelTestCase {
 						addressDetails.get(CheckOut.shippingAddress.keys.city),
 						addressDetails.get(CheckOut.shippingAddress.keys.city),
 						addressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-						addressDetails.get(CheckOut.shippingAddress.keys.phone), !proprties.contains(guestUser));
+						addressDetails.get(CheckOut.shippingAddress.keys.phone));
+				CheckOut.shippingMethod.writeMail(Pemail);
 			}
-
+			ReportUtil.takeScreenShot(getDriver());
+			
 			// Shipping method
 			CheckOut.shippingMethod.fillAndclickNext(shippingMethod);
-
+			ReportUtil.takeScreenShot(getDriver());
+			
+			
+			//click on continue to payment button 
+			CheckOut.shippingMethod.clickContinueToPayement();
+			ReportUtil.takeScreenShot(getDriver());
+			
 			// checkout- payment
 			if ((proprties.contains(CheckOut.paymentInnformation.keys.isSavedPayement) && !proprties.contains(freshUser)
 					&& !proprties.contains(guestUser))|| proprties.contains(loggedInUser)|| proprties.contains(loggedDuringChcOt)) {
+				ReportUtil.takeScreenShot(getDriver());
 				CheckOut.paymentInnformation.fillAndclickNext(true);
+				ReportUtil.takeScreenShot(getDriver());
 			} else {
 
 				// do not save address if scenario is guest user
@@ -182,62 +199,48 @@ public class Base_checkout extends SelTestCase {
 				LinkedHashMap<String, Object> billAddressDetails = (LinkedHashMap<String, Object>) addresses
 						.get(billingAddress);
 
-				if (saveBilling) {
-					CheckOut.paymentInnformation.fillAndclickNext(payment,
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC), saveBilling,
-							billingAddress.equalsIgnoreCase(shippingAddress),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
-				} else {
-					CheckOut.paymentInnformation.fillAndclickNext(payment,
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
-							(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC),
-							billingAddress.equalsIgnoreCase(shippingAddress),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.countery),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.firstName),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.lastName),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.adddressLine),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.city),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.zipcode),
-							(String) billAddressDetails.get(CheckOut.shippingAddress.keys.phone));
-				}
+			
+				CheckOut.paymentInnformation.fill(payment, "Tester",
+						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.number),
+						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireMonth),
+						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.expireYear),
+						(String) paymentDetails.get(CheckOut.paymentInnformation.keys.CVCC));
 			}
 			//Waiting payment to be processed
 			if(getBrowserName().equals("firefox"))
 			Thread.sleep(1000);
 			
-			//TODO: Validate the order sub-total in order review section
-			//sassert().assertEquals(CheckOut.reviewInformation.getSubtotal(), orderSubtotal);
-
-			//CheckOut.reviewInformation.acceptTerms(true);
-			CheckOut.reviewInformation.placeOrder();
-
-			//TODO: lower
-			/*
+			
+			//go to order review
+			CheckOut.paymentInnformation.clickContinueToOrderReview();
+			ReportUtil.takeScreenShot(getDriver());
+			
+			String orderReviewSubtotal  = CheckOut.reviewInformation.getSubtotal();
+			sassert().assertEquals(orderReviewSubtotal, orderSubtotal ,
+					"Subtotal in cart "+orderSubtotal+" is not matching chekout review pages: " + orderReviewSubtotal);
+			CheckOut.reviewInformation.clickPlaceOrderBtn();
+			ReportUtil.takeScreenShot(getDriver());
+			
+			
 			
 			// Validate the order sub total in order review section
-			//sassert().assertEquals(CheckOut.orderConfirmation.getSubTotal(), orderSubtotal);
+			String orderconfirmationsubtotal = CheckOut.orderConfirmation.getSubTotal();
+			sassert().assertEquals(orderconfirmationsubtotal, orderSubtotal,
+					"Subtotal in cart "+orderSubtotal+" is not matching chekout order confirmation pages: " + orderconfirmationsubtotal);
+			orderId = CheckOut.orderConfirmation.getOrderId();
 
+			/*
+			//TODO: lower
 			orderTotal = CheckOut.orderConfirmation.getOrderTotal();
 			orderShipping = CheckOut.orderConfirmation.getShippingCost();
-			orderId = CheckOut.orderConfirmation.getOrderId();
 
 			if (proprties.contains(guestUser) && proprties.contains("register-guest")) {
 				CheckOut.guestCheckout.fillPreRegFormAndClickRegBtn("1234567", false);
 			}
-			
-			Testlogs.get().debug(MessageFormat.format(LoggingMsg.CHECKOUT_RESULT , Pemail,orderId,orderTotal,orderSubtotal, "", orderShipping));
 			 */
+			Testlogs.get().debug(MessageFormat.format(LoggingMsg.CHECKOUT_RESULT , Pemail,orderId,orderSubtotal));
+			
+			sassert().assertAll();
 			Common.testPass();
 		} catch (Throwable t) {
 			setTestCaseDescription(getTestCaseDescription());
