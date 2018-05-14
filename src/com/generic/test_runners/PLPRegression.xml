@@ -3,8 +3,8 @@
 <suite name="Suite" parallel="tests" thread-count="10" data-provider-thread-count="2">
 
 	
-	<test name="PLP validation ChromeG">
-		<parameter name="browserName" value="ChromeG"></parameter>
+	<test name="PLP validation chrome">
+		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
               <class name="com.generic.tests.Search_PLP.PLP_Base" />
 		</classes>
