@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="tests" thread-count="10" data-provider-thread-count="3">
-	<test name="payment details regression ChromeG">
-		<parameter name="browserName" value="ChromeG"></parameter>
+	<test name="payment details regression chrome">
+		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
 		   	<class name="com.generic.tests.MyAccount_Payment.PaymentDetailsValidationBase" />
 		</classes>

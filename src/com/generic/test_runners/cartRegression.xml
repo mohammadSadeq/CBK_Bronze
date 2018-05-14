@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Cart Suite" parallel="tests" thread-count="10" data-provider-thread-count="3">
-	<test name="cart Tests _ ChromeG">
+<suite name="Suite" parallel="tests" thread-count="10" data-provider-thread-count="3">
+	<test name="cart Tests _ chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<classes>
 			<class name="com.generic.tests.Cart.Base_cart" />
