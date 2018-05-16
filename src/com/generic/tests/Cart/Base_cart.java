@@ -121,7 +121,7 @@ public class Base_cart extends SelTestCase {
 						* Double.parseDouble(Cart.getProductUnitPrice().replace("$", "").trim());
 				
 				double siteProductSubtotal = Double.parseDouble(Cart.getProductSubtotal().replace("$", "").trim());
-				double siteOrdersubtotal  = Double.parseDouble(Cart.getOrderSubTotal().split(":")[1].replace("$", "").trim());
+				double siteOrdersubtotal  = Double.parseDouble(Cart.getOrderSubTotal().replace("$", "").trim());
 				double SheetOrderSubtotal = Double.parseDouble(OrderSubtotal.replace("$", "").trim());
 				
 				String subtotalMSG = "<font color=#f442cb>Subtotal from sheet: " + SheetOrderSubtotal +

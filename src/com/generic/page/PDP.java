@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.Wait;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
@@ -59,6 +60,36 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			getDriver().get(productDetails.get(keys.url));
+			if (!PDP.keys.color.equals(""))
+				selectColor((String) productDetails.get(PDP.keys.color));
+			
+			if (!((String) productDetails.get(PDP.keys.sizeFamily)).equals("")){
+				logs.debug("selecting sizeFamily: " + (String) productDetails.get(PDP.keys.sizeFamily) );
+				PDP.selectFamilySize((String) productDetails.get(PDP.keys.sizeFamily));
+				
+				logs.debug("selecting size: " + (String) productDetails.get(PDP.keys.size) );
+				PDP.selectSize((String) productDetails.get(PDP.keys.size));
+								
+				logs.debug("checking PDP selected size and family size");
+				String SizeAndFamilyContent = PDP.getSelectedSizeAndFamily();
+				
+				String sizeAndFamily = (String) productDetails.get(PDP.keys.sizeFamily)+" - "+(String) productDetails.get(PDP.keys.size);
+				sassert().assertTrue(SizeAndFamilyContent.contains(sizeAndFamily), "<font color=#f442cb>product size is not expected <br>: "+SizeAndFamilyContent+"</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//size check
+			//Apply size and it's family and check of the results reflected to PDP
+			if (!((String) productDetails.get(PDP.keys.length)).equals("")){
+				logs.debug("selecting length: " + (String) productDetails.get(PDP.keys.length) );
+				PDP.selectLength((String) productDetails.get(PDP.keys.length));
+				
+				logs.debug("checking PDP selected length");
+				String SelectedLength = PDP.getselectedLength();
+				
+				sassert().assertTrue(SelectedLength.toLowerCase().contains(PDP.keys.length.toLowerCase()),
+						"<font color=#f442cb>product length is not expected <br>: " + SelectedLength + " from sheet:"
+								+ PDP.keys.length.toLowerCase() + "</font>");
+				ReportUtil.takeScreenShot(getDriver());
+			}//size check
 			clickAddToCartBtn();
 			Thread.sleep(1000);
 			getCurrentFunctionName(false);
