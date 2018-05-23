@@ -116,12 +116,21 @@ public class Base_checkout extends SelTestCase {
 						Pemail, (String) RandomUserdetails.get(Registration.keys.password),
 						(String) RandomUserdetails.get(Registration.keys.password), addressDetails);
 			}
-
-			for (String product : products.split("\n")) {
-				Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
-				LinkedHashMap<String, String> productDetails = (LinkedHashMap<String, String>) invintory.get(product);
-				PDP.addProductsToCartAndClickCheckOut(productDetails);
+			
+			if (products.contains("auto") || products.equals("")) {
+				PDP.navigateToRandomPDP("Tank");
+				PDP.addProductsToCart();
+				PDP.clickcheckoutBtnCartPopup();
+				
+			} else {
+				for (String product : products.split("\n")) {
+					Testlogs.get().debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
+					LinkedHashMap<String, String> productDetails = (LinkedHashMap<String, String>) invintory
+							.get(product);
+					PDP.addProductsToCartAndClickCheckOut(productDetails);
+				}
 			}
+			
 
 			// flow to support coupon validation
 			if (!"".equals(coupon)) {

@@ -11,6 +11,8 @@ public class CartSelectors
 	public static final String orderDiscount = "order-discount discount";
 	public static final String orderTotal = "order-value value";
 	public static final String checkoutBtn = "dwfrm_cart_checkoutCart";
+	public static final String numberOfProducts = "cart-row";
+	public static final String deleteLink = "dwfrm_cart_shipments_i0_items_i$_deleteProduct";
 	
 	
 	public static final String totals = "totals-line-items";
@@ -25,7 +27,6 @@ public class CartSelectors
 	public static final String productQtyBox = "quantity";
 	public static final String errorMessage = "information-message warning";
 	public static final String postitiveMsg = "information-message positive";
-	public static final String numberOfProducts = "btn-remove-cart-item";
 	public static final String removeCoupon = "css,.voucher-code-btn";
 	public static final String OrderSubTotal = "test_Order_Totals_Subtotal_$1";
 	public static final String glabalErrorMessage = "alert alert-danger alert-dismissable";

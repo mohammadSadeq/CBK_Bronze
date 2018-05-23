@@ -20,6 +20,7 @@ import org.openqa.selenium.support.ui.Wait;
 
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.PagesURLs;
 import com.generic.setup.SelTestCase;
 import com.generic.util.ReportUtil;
 import com.generic.util.SelectorUtil;
@@ -99,6 +100,28 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	
+	//done-CBK - for random selection
+	public static void addProductsToCart() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			
+			selectRandomColor();
+			selectRandomFamilySize();
+			selectRandomSize();
+			selectRandomLength();
+			
+			clickAddToCartBtn();
+			Thread.sleep(1000);
+			
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 
 	//done-CBK
 	public static String getPrice() throws Exception {
@@ -119,10 +142,10 @@ public class PDP extends SelTestCase {
 	}
 
 	
-	private static void clickcheckoutBtnCartPopup() throws Exception {
+	public static void clickcheckoutBtnCartPopup() throws Exception {
 		getCurrentFunctionName(true);
 		//TODO: pull from config
-		getDriver().get("https://dev.christopherandbanks.com/cart");
+		getDriver().get(PagesURLs.getHomePage() +PagesURLs.getShoppingCartPage());
 		getCurrentFunctionName(false);
 	}
 
@@ -263,6 +286,29 @@ public class PDP extends SelTestCase {
 		
 	}
 	
+	// Done-CBK
+	public static void selectRandomFamilySize() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.randomFamilySize);
+			List <WebElement> FSs = SelectorUtil.getAllElements(subStrArr);
+			if (FSs.size()!=0)
+			{
+				FSs.get(0).click();
+			}
+			else {
+				logs.debug("ignoring selecting family size");
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
 	//Done-CBK
 	public static void selectSize(String size) throws Exception {
 		try {
@@ -279,6 +325,30 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 		
+	}
+	
+	
+	// Done-CBK
+	public static void selectRandomSize() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.randomSize);
+			List <WebElement> sizes = SelectorUtil.getAllElements(subStrArr);
+			if (sizes.size()!=0)
+			{
+				sizes.get(0).click();
+			}
+			else {
+				logs.debug("ignoring selecting size");
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
 	}
 
 	//Done-CBK
@@ -309,6 +379,28 @@ public class PDP extends SelTestCase {
 			subStrArr.add(length);
 			valuesArr.add("");
 			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	// Done-CBK
+	public static void selectRandomLength() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.randomLength);
+			List <WebElement> lengths = SelectorUtil.getAllElements(subStrArr);
+			if (lengths.size()!=0)
+			{
+				lengths.get(0).click();
+			}
+			else {
+				logs.debug("ignoring selecting lenghth");
+			}
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
@@ -352,6 +444,30 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 		
+	}
+	
+	// Done-CBK
+	public static void selectRandomColor() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.randomColor);
+			List <WebElement> colors = SelectorUtil.getAllElements(subStrArr);
+			if (colors.size()!=0)
+			{
+				colors.get(0).click();
+			}
+			else {
+				logs.debug("ignoring selecting color");
+			}
+			Thread.sleep(3000);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
 	}
 
 	
@@ -400,7 +516,55 @@ public class PDP extends SelTestCase {
 		return SelectorUtil.textValue.get();
 	}
 
+	public static void navigateToRandomPDP(String keyword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			searchOnKeyword(keyword);
+			pickRandomProduct();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+		
+	}
 
+	//done-cbk
+	private static void searchOnKeyword(String keyword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.searchBox);
+			valuesArr.add(keyword+",pressEnter");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+		
+	}
+
+	//done-cbk
+	private static void pickRandomProduct() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			List<String> subStrArr = new ArrayList<String>();
+			List<String> valuesArr = new ArrayList<String>();
+			subStrArr.add(PDPSelectors.RandomPDP);
+			valuesArr.add("");
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed, new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+		
+	}
 
 
 

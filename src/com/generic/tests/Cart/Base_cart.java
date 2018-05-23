@@ -92,7 +92,7 @@ public class Base_cart extends SelTestCase {
 				for (String product : products.split("\n"))
 					prepareCartNotLoggedInUser(product);
 			
-			getDriver().get(PagesURLs.getShoppingCartPage());
+			getDriver().get(PagesURLs.getHomePage()+PagesURLs.getShoppingCartPage());
 			//TODO: Cart.updateQuantityValue(browser, lineOrder, qty);
 
 			// flow to support coupon validation
@@ -122,17 +122,14 @@ public class Base_cart extends SelTestCase {
 				
 				double siteProductSubtotal = Double.parseDouble(Cart.getProductSubtotal().replace("$", "").trim());
 				double siteOrdersubtotal  = Double.parseDouble(Cart.getOrderSubTotal().replace("$", "").trim());
-				double SheetOrderSubtotal = Double.parseDouble(OrderSubtotal.replace("$", "").trim());
 				
-				String subtotalMSG = "<font color=#f442cb>Subtotal from sheet: " + SheetOrderSubtotal +
-						"<br>calculated subtotal: "+ calculatedProductSubtotal+
+				String subtotalMSG = "<font color=#f442cb>calculated subtotal: "+ calculatedProductSubtotal+
 						"<br>site product subtotal: " + siteProductSubtotal+
 						"<br>site order subtotal: "+ siteOrdersubtotal+ "</font>" ; 
 				
 				logs.debug(subtotalMSG);
-				sassert().assertTrue(calculatedProductSubtotal == SheetOrderSubtotal ||
-						siteOrdersubtotal ==SheetOrderSubtotal ||
-						siteProductSubtotal == SheetOrderSubtotal, "FAILED: the subtotals should be matched: <br>"+subtotalMSG);
+				sassert().assertTrue(calculatedProductSubtotal == siteOrdersubtotal ||
+						siteProductSubtotal == siteOrdersubtotal, "FAILED: the subtotals should be matched: <br>"+subtotalMSG);
 			}//verify subtotal
 
 			if (proprties.contains("Verify discount")) {
@@ -193,7 +190,7 @@ public class Base_cart extends SelTestCase {
 			
 			if (proprties.contains("Loggedin")) {
 				// navigate back to cart
-				getDriver().get("http://stage.com/oshstorefront/cart");
+				getDriver().get(PagesURLs.getHomePage()+PagesURLs.getShoppingCartPage());
 				Cart.removeAllItemsFromCart();
 			}
 			
@@ -216,8 +213,32 @@ public class Base_cart extends SelTestCase {
 	@SuppressWarnings("unchecked")
 	public void prepareCartNotLoggedInUser(String product) throws Exception {
 		logs.debug(MessageFormat.format(LoggingMsg.ADDING_PRODUCT, product));
-		productDetails = (LinkedHashMap<String, String>) invintory.get(product);
-		PDP.addProductsToCart(productDetails);
+		if (product.contains("auto") || product.equals("")) {
+			PDP.navigateToRandomPDP("Tank");
+			PDP.addProductsToCart();
+			
+			productDetails = new LinkedHashMap<String, String>();
+			
+			productDetails.put(PDP.keys.id, "");
+			productDetails.put(PDP.keys.title, "");
+			productDetails.put(PDP.keys.url, "");
+			productDetails.put(PDP.keys.qty, "1");
+			productDetails.put(PDP.keys.color, "");
+			productDetails.put(PDP.keys.sizeFamily , "");
+			productDetails.put(PDP.keys.size, "");
+			productDetails.put(PDP.keys.length, "");
+			productDetails.put(PDP.keys.info, "");
+			productDetails.put(PDP.keys.price,PDP.getPrice());
+
+			
+			PDP.clickcheckoutBtnCartPopup();
+			
+		} 
+		else
+		{
+			productDetails = (LinkedHashMap<String, String>) invintory.get(product);
+			PDP.addProductsToCart(productDetails);
+		}
 	}
 
 	public void prepareCartLoggedInUser(LinkedHashMap<String, Object> userdetails, String product) throws Exception {

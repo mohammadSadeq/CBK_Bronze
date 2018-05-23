@@ -11,6 +11,12 @@ public class PDPSelectors {
 	public static String color = "Select color: "; 
 	public static String sizeAndFamilyLable = "css,div.product-variations > ul > div > ul > li > div.label";
 	public static String lengthLable = "css,div>div>div.product-sister-styles>ul>li>div.label";
+	public static String randomColor = "css,div.value>ul.swatches.color>li.selectable>a.swatchanchor.color";
+	public static String randomLength = "css,div#tab-1>div.product-sister-styles>ul>li>div.value>ul>li";
+	public static String randomFamilySize = "css,ul>div.product-sister-styles>ul>li>div.value>ul>li";
+	public static String randomSize = "css,li.attribute.size>div>ul>li";
+	public static String searchBox = "css,form>fieldset>input#q";
+	public static String RandomPDP = "css,#search-result-items>li>div>h2>a";
 	
 	public static String cart_popup = "popup-btn-checkout";
 	public static String qty = "input-qty no-spin";

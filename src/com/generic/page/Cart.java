@@ -394,7 +394,7 @@ public class Cart extends SelTestCase {
 		return (SelectorUtil.textValue.get().contains("empty") ? true : false);
 	}
 
-	
+	//done-cbk
 	public static void removeAllItemsFromCart() throws Exception {
 		getCurrentFunctionName(true);
 
@@ -410,7 +410,9 @@ public class Cart extends SelTestCase {
 		logs.debug(LoggingMsg.REMOVE_ALL_ITEMS_FROM_CART);
 		for (int itemIndex = numberOfItems; itemIndex > 0; itemIndex--)
 		{
-			SelectorUtil.initializeSelectorsAndDoActions(subStrArr, valuesArr);
+			List<String> subStrArr2 = new ArrayList<String>();
+			subStrArr2.add(CartSelectors.deleteLink.replace("$", itemIndex+""));
+			SelectorUtil.initializeSelectorsAndDoActions(subStrArr2, valuesArr);
 		}
 
 		getCurrentFunctionName(false);
